@@ -3,21 +3,16 @@ from os import path, mkdir, remove
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
-import googlemaps
 
 base_url = 'https://www.stlouis-mo.gov'
 
 url = 'https://www.stlouis-mo.gov/government/departments/sldc/real-estate/lra-owned-property-full-list.cfm'
-
-api_key = 'AIzaSyCJ-Qnrwu7l4GSYfEsDyTfoL9VZOpj_zxU'
 
 data_dir = 'data'
 
 # create data directory if not exist
 if not path.exists(data_dir):
     mkdir(data_dir)
-
-gmaps = googlemaps.Client(key=api_key)
 
 # get LRA page
 page = requests.get(url)
