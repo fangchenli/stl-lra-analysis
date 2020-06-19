@@ -17,7 +17,7 @@ def get_latlng(client, address):
         return geocode_result[0]["geometry"]["location"]
 
 
-api_key = "AIzaSyCJ-Qnrwu7l4GSYfEsDyTfoL9VZOpj_zxU"
+api_key = "key"
 
 # initialize a google map client
 gmaps = googlemaps.Client(key=api_key)

@@ -1,4 +1,4 @@
-# StlLra
+# STL-LRA Analysis
 
 ## Environment Setup
 
@@ -7,5 +7,11 @@
 
 ```shell script
     conda update conda
-    conda create --name data python=3.7 numpy pandas requests xlrd beautifulsoup4
+    conda create --name data python=3.8 pandas requests xlrd beautifulsoup4
 ```
+
+* Install LibreOffice
+    * Linux
+    ```shell script
+      sudo snap install libreoffice
+    ```

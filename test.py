@@ -37,17 +37,11 @@
 #         print(data_path, 'is finished')
 #
 #         break
-import os
-from urllib.parse import urljoin, urlparse, urlsplit
+import requests
+from os import path
+url = 'https://www.stlouis-mo.gov/data/upload/data-files/par.zip'
+# res = requests.get(url)
+d = 'data'
+p = path.basename(url)
+print(path.join(d, p))
 
-url = "https://www.stlouis-mo.gov/government/departments/sldc/real-estate/lra-owned-property-full-list.cfm"
-
-base = os.path.dirname(url)
-print(base)
-o = urlparse(url)
-print(o.scheme)
-print(o.hostname)
-print(urljoin(o.scheme, o.hostname))
-print(o.path)
-
-print(url.replace(o.path, ""))
