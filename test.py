@@ -37,11 +37,12 @@
 #         print(data_path, 'is finished')
 #
 #         break
-import requests
 from os import path
-url = 'https://www.stlouis-mo.gov/data/upload/data-files/par.zip'
+
+import requests
+
+url = "https://www.stlouis-mo.gov/data/upload/data-files/par.zip"
 # res = requests.get(url)
-d = 'data'
+d = "data"
 p = path.basename(url)
 print(path.join(d, p))
-
