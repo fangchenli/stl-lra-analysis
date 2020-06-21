@@ -1,0 +1,16 @@
+name: stl-lra
+channels:
+  - defaults
+
+dependencies:
+  - python=3.8
+  - pandas
+  - xlrd
+  - matplotlib
+  - geopandas
+  - notebook
+
+  # data retrieval
+  - requests
+  - beautifulsoup4
+
