@@ -7,7 +7,7 @@
 
 ```shell script
     conda update conda
-    conda create --name data python=3.8 pandas requests xlrd beautifulsoup4
+    conda env create -f environment.yml
 ```
 
 * Install LibreOffice
