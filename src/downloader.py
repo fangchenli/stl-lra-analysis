@@ -1,5 +1,6 @@
 from io import BytesIO
 from os import mkdir, path, remove
+from pathlib import Path
 from subprocess import run
 from urllib.parse import urljoin, urlparse
 from zipfile import ZipFile
@@ -59,15 +60,15 @@ def download_parcel_data(data_dir: str):
 
 
 def download_parcel_shape(data_dir: str):
-    url = 'https://www.stlouis-mo.gov/data/upload/data-files/prcl_shape.zip'
+    url = "https://www.stlouis-mo.gov/data/upload/data-files/prcl_shape.zip"
     base_name = path.basename(url)
     save_dir = path.join(data_dir, base_name)
     res = requests.get(url)
-    with open(save_dir, 'wb') as file:
+    with open(save_dir, "wb") as file:
         file.write(res.content)
 
 
-data_dir_path = "data"
+data_dir_path = Path("data", "raw")
 
 # create data directory if not exist
 if not path.exists(data_dir_path):

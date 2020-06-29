@@ -1,16 +1,21 @@
 name: stl-lra
 channels:
   - defaults
+  - conda-forge
 
 dependencies:
   - python=3.8
   - pandas
   - xlrd
+  - descartes
   - matplotlib
-  - geopandas
+  - geopandas=0.8
   - notebook
 
   # data retrieval
   - requests
   - beautifulsoup4
 
+  # linting
+  - isort
+  - black
