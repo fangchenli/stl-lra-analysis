@@ -29,6 +29,7 @@ def get_parcel_and_shape() -> (pd.DataFrame, gpd.GeoDataFrame):
     shape_path = "../data/raw/prcl_shape.zip"
     shape = gpd.read_file(get_absolute_zip_path(shape_path))
     shape = shape.astype({"HANDLE": "int64"})
-    shape["centroid"] = shape["geometry"].centroid.to_crs("EPSG:4326")
-    shape = shape.to_crs("EPSG:4326")
+    shape["centroid"] = shape["geometry"].centroid
+    # shape["centroid"] = shape["geometry"].centroid.to_crs("EPSG:4326")
+    # shape = shape.to_crs("EPSG:2263")
     return parcel, shape

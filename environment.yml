@@ -19,3 +19,7 @@ dependencies:
   # linting
   - isort
   - black
+
+  - pip
+  - pip:
+      - psycopg2
