@@ -10,6 +10,24 @@ import requests
 from bs4 import BeautifulSoup
 
 
+def get_property_value(handle: int):
+    url = "https://www.stlouis-mo.gov/government/departments/sldc/real-estate/lra-owned-property-search.cfm"
+    param = {"HANDLE": handle}
+    res = requests.get(url, params=param)
+    soup = BeautifulSoup(res.content, "html.parser")
+    tds = soup.find_all("td")
+    for td in tds:
+        tag_contents = td.contents
+        if len(tag_contents) == 3:
+            if "$" in tag_contents[0]:
+                value_str = (
+                    tag_contents[0].strip().replace("$", "", 1).replace(",", "", 1)
+                )
+                return (
+                    float(value_str) if value_str.replace(".", "", 1).isdigit() else 0
+                )
+
+
 def download_lra_property_data(data_dir: str):
     url = "https://www.stlouis-mo.gov/government/departments/sldc/real-estate/lra-owned-property-full-list.cfm"
 
@@ -68,12 +86,13 @@ def download_parcel_shape(data_dir: str):
         file.write(res.content)
 
 
-data_dir_path = Path("data", "raw")
+if __name__ == '__main__':
+    data_dir_path = Path("data", "raw")
 
-# create data directory if not exist
-if not path.exists(data_dir_path):
-    mkdir(data_dir_path)
+    # create data directory if not exist
+    if not path.exists(data_dir_path):
+        mkdir(data_dir_path)
 
-download_lra_property_data(data_dir_path)
-download_parcel_data(data_dir_path)
-download_parcel_shape(data_dir_path)
+    download_lra_property_data(data_dir_path)
+    download_parcel_data(data_dir_path)
+    download_parcel_shape(data_dir_path)
