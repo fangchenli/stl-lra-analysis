@@ -5,17 +5,23 @@ channels:
 
 dependencies:
   - python=3.8
-  - pandas
-  - xlrd
-  - descartes
   - matplotlib
-  - geopandas=0.8
   - notebook
+
+  # pandas and its dependencies
+  - pandas
+  - numexpr
+  - bottleneck
+  - xlrd
+
+  # geo
+  - geopandas=0.8
+  - descartes
 
   # data retrieval
   - requests
   - beautifulsoup4
 
-  # linting
+  # style
   - isort
   - black
