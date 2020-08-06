@@ -12,13 +12,13 @@ def get_absolute_zip_path(relative_path) -> str:
 
 
 def get_lra_properties() -> (pd.DataFrame, pd.DataFrame, pd.DataFrame):
-    vacant = pd.read_csv("../data/raw/6-1-2020-Vacant-Lot-List.csv")
+    vacant = pd.read_csv("../data/raw/8-3-20-Vacant-Lot-List.csv")
     vacant["Address"] = vacant["Address"].map(lambda x: x.upper())
 
-    hpp = pd.read_csv("../data/raw/5-1-2020-HPP-List.csv")
+    hpp = pd.read_csv("../data/raw/8-3-20-HPP-Eligible-List.csv")
     hpp["Address"] = hpp["Address"].map(lambda x: x.upper())
 
-    improved = pd.read_csv("../data/raw/6-1-2020-Improved-Property-List-2.csv")
+    improved = pd.read_csv("../data/raw/8-3-20-Improved-Property-List.csv")
     improved["Address"] = improved["Address"].map(lambda x: x.upper())
     return vacant, hpp, improved
 

@@ -86,7 +86,7 @@ def download_parcel_shape(data_dir: str):
         file.write(res.content)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     data_dir_path = Path("data", "raw")
 
     # create data directory if not exist
