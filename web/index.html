@@ -31,7 +31,7 @@
         accessToken: 'pk.eyJ1Ijoidmlyb3NhbGkiLCJhIjoiY2p5M3l2OTZ2MDBjMTNobWtuMHF4Z2Z3ayJ9.Lo7EBwTWVQjKG8p6vOjooA'
     }).addTo(map);
 
-    fetch('https://cors-anywhere.herokuapp.com/https://github.com/VirosaLi/stl-lra-analysis/raw/master/data/processed/vacant.geojson')
+    fetch('https://cors-anywhere.herokuapp.com/https://stl-lra.nyc3.digitaloceanspaces.com/vacant.geojson')
         .then(res => res.json())
         .then(data => {
             L.geoJSON(data, {
