@@ -12,10 +12,10 @@ dependencies:
   - pandas
   - numexpr
   - bottleneck
-  - xlrd
+  - openpyxl
 
   # geo
-  - geopandas=0.8
+  - geopandas=0.9
   - descartes
 
   # data retrieval
@@ -25,3 +25,7 @@ dependencies:
   # style
   - isort
   - black
+
+  - pip
+  - pip:
+      - "git+https://github.com/fangchenli/opendbf.git"

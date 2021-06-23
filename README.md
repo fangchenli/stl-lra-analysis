@@ -2,21 +2,10 @@
 
 ## Environment Setup
 
-* Install Miniconda from https://docs.conda.io/en/latest/miniconda.html
-```shell script
-    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-    sh Miniconda3-latest-Linux-x86_64.sh
-```
+* Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
 
-* Create conda environment
+* Update conda and create conda environment
 ```shell script
     conda update conda
-    conda env create --prefix ./env -f environment.yml
+    conda env create -f environment.yml
 ```
-
-* Install LibreOffice
-
-    * Linux    
-    ```shell script
-      sudo snap install libreoffice
-    ```
