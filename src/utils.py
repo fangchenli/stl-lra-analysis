@@ -4,6 +4,10 @@ import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Polygon
 
+root_path = Path(__file__).parent.parent
+data_path = Path(root_path, "data")
+raw_path = Path(data_path, "raw")
+
 
 def get_absolute_zip_path(relative_path) -> str:
     p = Path(relative_path)
@@ -11,23 +15,25 @@ def get_absolute_zip_path(relative_path) -> str:
     return file_url.replace("file", "zip")
 
 
-def get_lra_properties() -> (pd.DataFrame, pd.DataFrame, pd.DataFrame):
-    vacant = pd.read_csv("../data/raw/8-3-20-Vacant-Lot-List.csv")
-    vacant["Address"] = vacant["Address"].map(lambda x: x.upper())
-
-    hpp = pd.read_csv("../data/raw/8-3-20-HPP-Eligible-List.csv")
-    hpp["Address"] = hpp["Address"].map(lambda x: x.upper())
-
-    improved = pd.read_csv("../data/raw/8-3-20-Improved-Property-List.csv")
-    improved["Address"] = improved["Address"].map(lambda x: x.upper())
-    return vacant, hpp, improved
+def get_lra_properties() -> (pd.DataFrame, pd.DataFrame):
+    data_dict = {}
+    for path in raw_path.glob("*.csv"):
+        file_name = path.name
+        tokens = file_name.split("-")
+        if len(tokens) > 1:
+            _, _, _, name, _, _ = tokens
+            df = pd.read_csv(path)
+            df["Address"] = df["Address"].map(lambda x: x.upper())
+            data_dict[name.lower()] = df
+    return data_dict["vacant"], data_dict["improved"]
 
 
 def get_parcel_and_shape() -> (pd.DataFrame, gpd.GeoDataFrame):
-    parcel = pd.read_csv("../data/raw/par.csv", encoding="ISO-8859-1", low_memory=False)
+    parcel_path = Path(raw_path, "par.csv")
+    parcel = pd.read_csv(parcel_path, encoding="ISO-8859-1", low_memory=False)
     parcel.rename(lambda s: s.split(",")[0], axis="columns", inplace=True)
 
-    shape_path = "../data/raw/prcl_shape.zip"
+    shape_path = Path(raw_path, "prcl_shape.zip")
     shape = gpd.read_file(get_absolute_zip_path(shape_path))
     shape = shape.astype({"HANDLE": "int64"})
 
@@ -66,3 +72,9 @@ def crs_to_pixel_coordinate(shape: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     )
 
     return shape
+
+
+if __name__ == "__main__":
+    vacant, improved = get_lra_properties()
+    print(vacant.info())
+    print(improved.info())

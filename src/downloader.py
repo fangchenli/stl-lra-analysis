@@ -8,6 +8,8 @@ import requests
 from bs4 import BeautifulSoup
 from opendbf.dbf import dbf_to_csv
 
+from src.utils import raw_path
+
 
 def get_property_value(handle: int):
     url = "https://www.stlouis-mo.gov/government/departments/sldc/real-estate/lra-owned-property-search.cfm"
@@ -36,11 +38,7 @@ def download_lra_property_data(data_dir: Path):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
 
-    # find all "a" tags with href
-    a_tags = soup.find_all("a", href=True)
-
-    # download xlsx files and store to csv format
-    for a_tag in a_tags:
+    for a_tag in soup.find_all("a", href=True):
         href = a_tag["href"]
         if href.endswith(".xlsx"):
             data_path = urljoin(base_url, href)
@@ -76,10 +74,8 @@ def download_parcel_shape(data_dir: Path):
 
 
 if __name__ == "__main__":
-    root_path = Path(__file__).parent.parent
-    data_dir_path = Path(root_path, "data", "raw")
-    if not data_dir_path.exists():
-        data_dir_path.mkdir()
-    download_lra_property_data(data_dir_path)
-    download_parcel_data(data_dir_path)
-    download_parcel_shape(data_dir_path)
+    if not raw_path.exists():
+        raw_path.mkdir()
+    download_lra_property_data(raw_path)
+    download_parcel_data(raw_path)
+    download_parcel_shape(raw_path)
