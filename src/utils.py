@@ -2,11 +2,21 @@ from pathlib import Path
 
 import geopandas as gpd
 import pandas as pd
-from shapely.geometry import Polygon
+
 
 root_path = Path(__file__).parent.parent
 data_path = Path(root_path, "data")
 raw_path = Path(data_path, "raw")
+processed_path = Path(data_path, "processed")
+
+if not data_path.exists():
+    data_path.mkdir()
+
+if not raw_path.exists():
+    raw_path.mkdir()
+
+if not processed_path.exists():
+    raw_path.mkdir()
 
 
 def get_absolute_zip_path(relative_path) -> str:
@@ -42,36 +52,6 @@ def get_parcel_and_shape() -> (pd.DataFrame, gpd.GeoDataFrame):
     # shape["centroid"] = shape["geometry"].centroid.to_crs("EPSG:4326")
     # shape = shape.to_crs("EPSG:4326")
     return parcel, shape
-
-
-def crs_to_pixel_coordinate(shape: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-
-    # get the bounds for the whole shape
-    min_x, _, _, max_y = shape["geometry"].total_bounds
-
-    # transform it to zero base
-    shape["geometry"] = shape["geometry"].translate(-min_x, -max_y)
-
-    # get the exterior coordinates for the Polygons/MultiPolygons
-    shape["coordinate"] = shape["geometry"].map(
-        lambda x: list(x.exterior.coords)
-        if isinstance(x, Polygon)
-        else [list(e.exterior.coords) for e in x]
-    )
-
-    # negate the y-axis so it fits the canvas coordinate and expend the list of list for MultiPolygon
-    shape["coordinate"] = shape["coordinate"].map(
-        lambda x: [(pair[0], -pair[1]) for pair in x]
-        if isinstance(x[0], tuple)
-        else [(pair[0], -pair[1]) for e in x for pair in e]
-    )
-
-    # flatten the list of tuple to 1-d list of [x1, y1, x2, y2, x3, y3......]
-    shape["coordinate"] = shape["coordinate"].map(
-        lambda x: [coord for pair in x for coord in pair]
-    )
-
-    return shape
 
 
 if __name__ == "__main__":

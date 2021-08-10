@@ -51,7 +51,7 @@ def download_lra_property_data(data_dir: Path):
 
 def download_parcel_data(data_dir: Path):
     """
-    Download parcels data from stl website. The data is converted from dbf to cvs via LibreOffice.
+    Download parcels data from stl-lra website. The data is converted from dbf to cvs via opendbf.
     :param data_dir: output directory
     """
     url = "https://www.stlouis-mo.gov/data/upload/data-files/par.zip"
@@ -69,13 +69,11 @@ def download_parcel_shape(data_dir: Path):
     base_name = Path(url).name
     save_dir = Path(data_dir, base_name)
     res = requests.get(url)
-    with open(save_dir, "wb") as file:
+    with save_dir.open("wb") as file:
         file.write(res.content)
 
 
 if __name__ == "__main__":
-    if not raw_path.exists():
-        raw_path.mkdir()
     download_lra_property_data(raw_path)
     download_parcel_data(raw_path)
     download_parcel_shape(raw_path)

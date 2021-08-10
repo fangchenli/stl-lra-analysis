@@ -4,7 +4,7 @@ import geopandas as gpd
 import pandas as pd
 
 from src.downloader import get_property_value
-from src.utils import data_path
+from src.utils import processed_path
 
 
 def construct_geojson(
@@ -31,6 +31,5 @@ def construct_geojson(
     vacant_join["Value"] = vacant_join["HANDLE"].map(lambda x: get_property_value(x))
     vacant_join["ValuePerSF"] = vacant_join["Value"] / vacant_join["LotSF"]
 
-    processed_path = Path(data_path, "processed")
     file_path = Path(processed_path, "vacant.geojson")
     vacant_join.to_file(file_path, driver="GeoJSON")
